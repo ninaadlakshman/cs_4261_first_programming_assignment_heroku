@@ -51,10 +51,10 @@ MongoClient.connect(connectionString, {
   })
 
   app.get('/vacation-spot', (req, res) => {
-    const cursor = vacationSpotsCollection.find({_id: res.body._id}).toArray()
-        .then(results => {
+    const cursor = vacationSpotsCollection.find({_id: req.body._id}).toArray()
+        .then(result => {
             res.status(200).send({
-                data: results
+                data: result
             })
         })
         .catch(error => {
