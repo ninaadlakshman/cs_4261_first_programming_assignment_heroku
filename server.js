@@ -51,7 +51,7 @@ MongoClient.connect(connectionString, {
   })
 
   app.get('/vacation-spot', (req, res) => {
-    const cursor = vacationSpotsCollection.find({_id: req.body._id}).toArray()
+    const cursor = vacationSpotsCollection.find({id: req.body.id}).toArray()
         .then(result => {
             res.status(200).send({
                 data: result
