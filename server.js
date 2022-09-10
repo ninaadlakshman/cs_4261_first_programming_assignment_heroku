@@ -28,7 +28,9 @@ MongoClient.connect(connectionString, {
       received_request.body.current_temperature = weather_data;
         vacationSpotsCollection.insertOne(received_request.body)
         .then(result => {
-            res.sendStatus(200)
+            res.status(200).send({
+              response: "Vacation spot has been successfully added."
+            })
         })
         .catch(error => console.error(error))
     })
@@ -76,7 +78,9 @@ MongoClient.connect(connectionString, {
             }
           )
             .then(result => {
-                res.sendStatus(200)
+                res.status(200).send({
+                  response: "Vacation spot has been successfully updated."
+                })
             })
             .catch(error => {
                 console.error(error)
@@ -88,7 +92,9 @@ MongoClient.connect(connectionString, {
   app.delete("/vacation-spots", (req, res) => {
     vacationSpotsCollection.deleteMany({})
         .then(result => {
-            res.sendStatus(200)
+          res.status(200).send({
+            response: "All vacation spots have been successfully deleted."
+          })
         })
         .catch(error => {
             console.error(error)
