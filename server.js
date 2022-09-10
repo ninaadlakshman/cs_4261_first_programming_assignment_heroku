@@ -50,6 +50,18 @@ MongoClient.connect(connectionString, {
         })
   })
 
+  app.get('/vacation-spot', (req, res) => {
+    const cursor = vacationSpotsCollection.find({_id: res.body._id}).toArray()
+        .then(results => {
+            res.status(200).send({
+                data: results
+            })
+        })
+        .catch(error => {
+            res.sendStatus(400)
+        })
+  })
+
   app.put('/vacation-spots', (req, res) => {
     get_weather(req.body.location, function(weather_data) {
         vacationSpotsCollection.findOneAndUpdate(
