@@ -28,7 +28,7 @@ MongoClient.connect(connectionString, {
       received_request.body.current_temperature = weather_data;
         vacationSpotsCollection.insertOne(received_request.body)
         .then(result => {
-            res.status(200)
+            res.sendStatus(200)
         })
         .catch(error => console.error(error))
     })
