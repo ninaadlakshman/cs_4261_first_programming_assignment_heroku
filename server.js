@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const bodyParser= require('body-parser')
 require('dotenv').config();
+const cors = require('cors')
 const get_weather = require('./weather.js')
 
 const MongoClient = require('mongodb').MongoClient
@@ -18,6 +19,9 @@ MongoClient.connect(connectionString, {
   const vacationSpotsCollection = db.collection('vacation_spots')
   
   app.use(bodyParser.json())
+  app.use(cors({
+    origin: '*'
+  }))
 
   app.post('/vacation-spot', (req, res) => {
     get_weather(req.body.location, function(weather_data) {
