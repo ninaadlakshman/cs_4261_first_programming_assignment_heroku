@@ -23,15 +23,12 @@ MongoClient.connect(connectionString, {
   app.use(cors())
 
   app.post('/vacation-spot', (req, res) => {
-    get_weather(req.body.location, function(weather_data) {
-        req.body.current_temperature = weather_data;
-        vacationSpotsCollection.insertOne(req.body)
+    const received_request = req.body
+    get_weather(received_request.body.location, function(weather_data) {
+      received_request.body.current_temperature = weather_data;
+        vacationSpotsCollection.insertOne(received_request.body)
         .then(result => {
-            res.status(200).send({
-                data: {
-                    result
-                }
-            })
+            res.status(200)
         })
         .catch(error => console.error(error))
     })
@@ -50,7 +47,8 @@ MongoClient.connect(connectionString, {
   })
 
   app.get('/vacation-spot', (req, res) => {
-    const cursor = vacationSpotsCollection.findOne({_id: ObjectId(req.body._id)})
+    const received_request = req.body
+    const cursor = vacationSpotsCollection.findOne({_id: ObjectId(received_request.body._id)})
         .then(result => {
             res.status(200).send({
                 data: result
