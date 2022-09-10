@@ -24,7 +24,7 @@ MongoClient.connect(connectionString, {
         req.body.current_temperature = weather_data;
         vacationSpotsCollection.insertOne(req.body)
         .then(result => {
-            res.send(200, {
+            res.status(200).send({
                 data: {
                     result
                 }
@@ -37,7 +37,7 @@ MongoClient.connect(connectionString, {
   app.get('/vacation-spots', (req, res) => {
     const cursor = vacationSpotsCollection.find().toArray()
         .then(results => {
-            res.send(200, {
+            res.status(200).send({
                 data: results
             })
         })
@@ -74,11 +74,11 @@ MongoClient.connect(connectionString, {
   app.delete("/vacation-spots", (req, res) => {
     vacationSpotsCollection.deleteMany({})
         .then(result => {
-            res.send(200)
+            res.sendStatus(200)
         })
         .catch(error => {
             console.error(error)
-            res.send(500)
+            res.sendStatus(500)
         })
   })
   
@@ -87,6 +87,6 @@ MongoClient.connect(connectionString, {
 
 app.use(bodyParser.urlencoded({ extended: true }))
 
-app.listen(3000, function() {
-    console.log('listening on 3000')
+app.listen(process.env.PORT || 3000, function() {
+    console.log('listening on 3000 in local or process.env.PORT in Heroku')
 })
