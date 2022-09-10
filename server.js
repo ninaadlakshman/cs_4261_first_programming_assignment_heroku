@@ -20,10 +20,7 @@ MongoClient.connect(connectionString, {
   const vacationSpotsCollection = db.collection('vacation_spots')
   
   app.use(bodyParser.json())
-  app.use(cors({
-    origin: 'http://localhost:8100',
-    methods: ['GET', 'PUT', 'POST', 'DELETE']
-  }))
+  app.use(cors())
 
   app.post('/vacation-spot', (req, res) => {
     get_weather(req.body.location, function(weather_data) {
