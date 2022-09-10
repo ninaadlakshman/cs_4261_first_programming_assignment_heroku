@@ -6,6 +6,7 @@ const cors = require('cors')
 const get_weather = require('./weather.js')
 
 const MongoClient = require('mongodb').MongoClient
+const ObjectId = require('mongodb').ObjectId
 
 connectionString = process.env.DATABASE_URL
 
@@ -51,7 +52,7 @@ MongoClient.connect(connectionString, {
   })
 
   app.get('/vacation-spot', (req, res) => {
-    const cursor = vacationSpotsCollection.findOne({id: req.body.id})
+    const cursor = vacationSpotsCollection.findOne({_id: ObjectId(req.body._id)})
         .then(result => {
             res.status(200).send({
                 data: result
@@ -65,7 +66,7 @@ MongoClient.connect(connectionString, {
   app.put('/vacation-spots', (req, res) => {
     get_weather(req.body.location, function(weather_data) {
         vacationSpotsCollection.findOneAndUpdate(
-            { id: req.body.id },
+            { _id: ObjectId(req.body._id) },
             {
               $set: {
                 location: req.body.location,
