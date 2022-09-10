@@ -60,13 +60,14 @@ MongoClient.connect(connectionString, {
   })
 
   app.put('/vacation-spots', (req, res) => {
+    const received_request = req.body
     get_weather(req.body.location, function(weather_data) {
         vacationSpotsCollection.findOneAndUpdate(
-            { _id: ObjectId(req.body._id) },
+            { _id: ObjectId(received_request.body._id) },
             {
               $set: {
-                location: req.body.location,
-                date_to_visit: req.body.date_to_visit,
+                location: received_request.body.location,
+                date_to_visit: received_request.body.date_to_visit,
                 current_temperature: weather_data
               }
             },
