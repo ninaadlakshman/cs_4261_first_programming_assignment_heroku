@@ -25,7 +25,7 @@ MongoClient.connect(connectionString, {
   //   methods: ['GET', 'POST', 'PUT', 'DELETE']
   // }))
 
-  app.post('/vacation-spot', (req, res) => {
+  app.post('/vacation-spot', (req, res, next) => {
     get_weather(req.body.location, function(weather_data) {
         req.body.current_temperature = weather_data;
         vacationSpotsCollection.insertOne(req.body)
@@ -37,6 +37,7 @@ MongoClient.connect(connectionString, {
                     result
                 }
             })
+            next()
         })
         .catch(error => console.error(error))
     })
