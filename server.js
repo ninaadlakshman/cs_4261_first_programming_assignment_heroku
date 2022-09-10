@@ -20,7 +20,7 @@ MongoClient.connect(connectionString, {
   
   app.use(bodyParser.json())
   app.use(cors({
-    origin: 'http://localhost:8100/'
+    origin: 'http://localhost:8100'
   }))
 
   app.post('/vacation-spot', (req, res) => {
