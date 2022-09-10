@@ -63,7 +63,7 @@ MongoClient.connect(connectionString, {
 
   app.put('/vacation-spots', (req, res) => {
     const received_request = req.body
-    get_weather(req.body.location, function(weather_data) {
+    get_weather(received_request.body.location, function(weather_data) {
         vacationSpotsCollection.findOneAndUpdate(
             { _id: ObjectId(received_request.body._id) },
             {
