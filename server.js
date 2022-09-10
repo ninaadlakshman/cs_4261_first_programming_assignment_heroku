@@ -22,19 +22,16 @@ MongoClient.connect(connectionString, {
   app.use(bodyParser.json())
   app.use(cors())
 
-  app.post('/vacation-spot', (req, res, next) => {
+  app.post('/vacation-spot', (req, res) => {
     get_weather(req.body.location, function(weather_data) {
         req.body.current_temperature = weather_data;
         vacationSpotsCollection.insertOne(req.body)
         .then(result => {
-            res.header("Access-Control-Allow-Origin", "*");
-            res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
             res.status(200).send({
                 data: {
                     result
                 }
             })
-            next()
         })
         .catch(error => console.error(error))
     })
@@ -44,8 +41,7 @@ MongoClient.connect(connectionString, {
     const cursor = vacationSpotsCollection.find().toArray()
         .then(results => {
             res.status(200).send({
-                data: results,
-                goofy: 'goofy'
+                data: results
             })
         })
         .catch(error => {
